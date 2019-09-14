@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhu.mapper.HouseMapper">
+    <insert id="add" parameterType="House" useGeneratedKeys="true" keyProperty="hid">
+        INSERT INTO house_(hid,house_name,house_decoration,house_type,house_new,house_area,house_price,house_add,house_img)
+        VALUE(#{id},#{house_name},#{house_decoration},#{house_type},#{house_new},#{house_area},#{house_price},#{house_add},#{house_img})
+    </insert>
+    <delete id="delete" parameterType="House">
+        DELETE FROM house_ WHERE hid=#{hid}
+    </delete>
+    <select id="get" parameterType="_int" resultType="House">
+        SELECT * FROM house_ WHERE hid=#{hid}
+    </select>
+    <update id="update" parameterType="House">
+        UPDATE house_ SET house_name=#{house_name},house_decoration=#{house_decoration},house_type=#{house_type},house_new=#{house_new},house_area=#{house_area},house_price=#{house_price},house_add=#{house_add},house_img=#{house_img} WHERE hid=#{hid}
+    </update>
+    <select id="list" resultType="House">
+        SELECT * FROM house_
+    </select>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM house_
+    </select>
+    <select id="search" parameterType="House"  resultType="House" >
+        SELECT * FROM house_ WHERE  house_name=#{house_name} AND house_decoration=#{house_decoration} AND house_type=#{house_type} AND house_new=#{house_new}
+    </select>
+</mapper>

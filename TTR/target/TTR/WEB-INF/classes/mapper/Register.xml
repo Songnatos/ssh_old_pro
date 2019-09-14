@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhu.mapper.RegisterMapper">
+    <insert id="add" parameterType="Register" useGeneratedKeys="true" keyProperty="cid">
+        INSERT INTO register_(cid,username,password)
+        VALUES (#{cid},#{username},#{password})
+    </insert>
+    <delete id="delete" parameterType="Register">
+        DELETE FROM register_ WHERE cid=#{cid}
+    </delete>
+    <select id="get" parameterType="_int" resultType="Register">
+        SELECT * FROM register_ r WHERE r.cid=#{cid}
+    </select>
+    <select id="get1" parameterType="string" resultType="Register">
+        SELECT * FROM register_ WHERE username=#{username}
+    </select>
+    <select id="list" resultType="Register">
+        SELECT * FROM register_
+    </select>
+    <update id="update" parameterType="Register">
+     UPDATE register_ SET username=#{username},password=#{password} WHERE cid=#{cid}
+    </update>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM register_
+    </select>
+
+</mapper>

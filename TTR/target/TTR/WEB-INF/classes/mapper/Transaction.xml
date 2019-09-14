@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhu.mapper.TransactionMapper">
+    <insert id="add" parameterType="Transaction" useGeneratedKeys="true" keyProperty="tid">
+        INSERT INTO transaction_(tid,hid,cid,transaction_time,transaction_price,transaction_cost,transaction_status)
+        VALUES(#{tid},#{hid},#{cid},#{transaction_time},#{transaction_price},#{transaction_cost},#{transaction_status})
+    </insert>
+    <delete id="delete" parameterType="Transaction">
+        DELETE FROM transaction_ WHERE tid=#{tid};
+    </delete>
+    <select id="get" parameterType="_int" resultMap="ResultMap">
+        SELECT * FROM transaction_ t,customer_ c WHERE t.tid=#{tid} AND t.cid=c.cid
+    </select>
+    <select id="gwc" parameterType="_int" resultMap="ResultMap1">
+        SELECT * FROM transaction_ t,house_ h ,customer_ c WHERE t.cid=#{cid}  AND transaction_status=0 AND  c.cid=t.cid  AND t.hid=h.hid
+    </select>
+
+    <update id="update" parameterType="Transaction">
+        UPDATE transaction_ SET hid=#{hid},cid=#{cid}, transaction_time=#{transaction_time}, transaction_price=#{transaction_price}, transaction_cost=#{transaction_cost}, transaction_status=#{transaction_status}
+        WHERE tid=#{tid}
+    </update>
+    <select id="list" resultMap="ResultMap1">
+        SELECT * FROM transaction_ t,house_ h ,customer_ c  WHERE c.cid=t.cid AND t.hid=h.hid
+    </select>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM transaction_
+    </select>
+    <resultMap id="ResultMap" type="com.dhu.pojo.Transaction">
+        <id property="tid" column="tid"/>
+        <result property="transaction_time" column="transaction_time"/>
+        <result property="transaction_price" column="transaction_price"/>
+        <result property="transaction_cost" column="transaction_cost"/>
+        <result property="transaction_status" column="transaction_status"/>
+        <association property="customer" javaType="com.dhu.pojo.Customer">
+            <id property="cid" column="cid"/>
+        <result property="customer_name" column="customer_name"/>
+        <result property="customer_dep" column="customer_dep"/>
+        <result property="customer_sex" column="customer_sex"/>
+        <result property="customer_age" column="customer_age"/>
+            <result property="customer_code" column="customer_code"/>
+        </association>
+    </resultMap>
+    <resultMap id="ResultMap1" type="com.dhu.pojo.Transaction">
+        <id property="tid" column="tid"/>
+        <result property="transaction_time" column="transaction_time"/>
+        <result property="transaction_price" column="transaction_price"/>
+        <result property="transaction_cost" column="transaction_cost"/>
+        <result property="transaction_status" column="transaction_status"/>
+        <association property="customer" javaType="com.dhu.pojo.Customer">
+            <id property="cid" column="cid"/>
+            <result property="customer_name" column="customer_name"/>
+            <result property="customer_dep" column="customer_dep"/>
+            <result property="customer_sex" column="customer_sex"/>
+            <result property="customer_age" column="customer_age"/>
+            <result property="customer_code" column="customer_code"/>
+        </association>
+        <association property="house" javaType="com.dhu.pojo.House">
+            <id property="hid" column="hid"/>
+            <result property="house_name" column="house_name"/>
+            <result property="house_decoration" column="house_decoration"/>
+            <result property="house_type" column="house_type"/>
+            <result property="house_new" column="house_new"/>
+            <result property="house_area" column="house_area"/>
+            <result property="house_price" column="house_price"/>
+            <result property="house_add" column="house_add"/>
+        </association>
+    </resultMap>
+
+
+
+
+
+
+</mapper>

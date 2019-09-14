@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhu.mapper.PatientMapper">
+    <insert id="add" parameterType="Patient" useGeneratedKeys="true" keyProperty="idpatient">
+        INSERT INTO patient(idpatient,id_question,id_illness,id_report,illness,image,illnessdetail,data_before,data_after,delete,time_create,time_refresh)
+        VALUES (#{idpatient},#{id_question},#{id_illness},#{id_report},#{illness},#{image},#{illnessdetail},#{data_before},#{data_after},#{delete},#{time_create},#{time_refresh})
+    </insert>
+    <delete id="delete" parameterType="Patient">
+        DELETE FROM patient WHERE idpatient=#{idpatient}
+    </delete>
+    <select id="get" parameterType="_int" resultType="Patient">
+        SELECT * FROM  patient WHERE idpatient=#{idpatient}
+    </select>
+
+    <select id="list" resultType="Patient">
+        SELECT * FROM patient
+    </select>
+    <update id="update" parameterType="Patient">
+        UPDATE patient SET id_question=#{id_question},id_illness=#{id_illness},id_report=#{id_report},illness=#{illness},image=#{image},illnessdetail=#{illnessdetail},Role=#{Role},data_before=#{data_before},data_after=#{data_after},delete=#{delete},time_create=#{time_create},time_refresh=#{time_refresh} WHERE idpatient=#{idpatient}
+    </update>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM patient
+    </select>
+
+</mapper>
